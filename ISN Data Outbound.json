@@ -1,31 +1,24 @@
 {
     "$version": "2",
-    "api":
-    {
+    "api": {
         "base_url": "https://inspectionsupport.com/${subdomain}"
     },
-    "auth":
-    {
-        "basic-auth":
-        {
+    "auth": {
+        "basic-auth": {
             "type": "basic",
             "verify_url": "https://inspectionsupport.com/${subdomain}/rest/me",
-            "defined_fields":
-            {
-                "username":
-                {
+            "defined_fields": {
+                "username": {
                     "label": "Username",
                     "placeholder": "Enter the username for your account",
                     "help_text": "Username for ISN"
                 },
-                "password":
-                {
+                "password": {
                     "label": "Password",
                     "placeholder": "Enter your password",
                     "help_text": "Password for ISN"
                 },
-                "subdomain":
-                {
+                "subdomain": {
                     "label": "Account Subdomain",
                     "placeholder": "Enter your Account Subdomain",
                     "help_text": "Your subdomain is the name of your company URL after \"https://\" and before \".com\""
@@ -33,30 +26,23 @@
             }
         }
     },
-    "workflows":
-    [
+    "workflows": [
         {
             "name": "Send-a-contact-to-ISN",
             "label": "Send a contact to ISN",
             "description": "description",
             "type": "automations",
             "auth": "basic-auth",
-            "setup":
-            {
-                "connect":
-                {
+            "setup": {
+                "connect": {
                     "label": "Connect",
-                    "describe_connection":
-                    {
-                        "!pipe":
-                        [
+                    "describe_connection": {
+                        "!pipe": [
                             {
-                                "!http":
-                                {
+                                "!http": {
                                     "method": "GET",
                                     "path": "/rest/me",
-                                    "headers":
-                                    {
+                                    "headers": {
                                         "accept": "application/json"
                                     }
                                 }
@@ -67,49 +53,18 @@
                         ]
                     }
                 },
-                "select":
-                {
-                    "label": "Add subdomain",
-                    "form_fields":
-                    [
-                        {
-                            "label": "Buyer's Agent List Name",
-                            "required": false,
-                            "id": "buyersAgentListName",
-                            "type": "text"
-                        },
-                        {
-                            "label": "Seller's Agent List Name",
-                            "required": false,
-                            "id": "sellersAgentListName",
-                            "type": "text"
-                        },
-                        {
-                            "label": "Client's List Name",
-                            "required": false,
-                            "id": "clientsListName",
-                            "type": "text"
-                        }
-                    ]
-                },
-                "map":
-                {
+                "map": {
                     "label": "Mapping",
-                    "describe_source":
-                    {
+                    "describe_source": {
                         "label": "ActiveCampaign's contact fields",
-                        "options":
-                        {
+                        "options": {
                             "!resource": "ActiveCampaignContact.fields"
                         }
                     },
-                    "describe_target":
-                    {
+                    "describe_target": {
                         "label": "Inspection Support's contact fields",
-                        "options":
-                        {
-                            "!pipe":
-                            [
+                        "options": {
+                            "!pipe": [
                                 {
                                     "!jq": "[{ title: \"E-mail\", id: \"email\", required: true }, { title: \"First Name\", id: \"first\", required: false }, { title: \"Last Name\", id: \"last\", required: false }, { title: \"Mobile Phone\", id: \"mobilephone\", required: false }, { title: \"ISN ID\", id: \"id\", required: false }, { title: \"Display Name\", id: \"display\", required: false }, { title: \"URL\", id: \"url\", required: false }, { title: \"Address 1\", id: \"address1\", required: false },{ title: \"Address 2\", id: \"address2\", required: false }, { title: \"City\", id: \"city\", required: false }, { title: \"State\", id: \"state\", required: false }, { title: \"State Abbrevaiation\", id: \"stateabbreviation\", required: false }, { title: \"Zip Code\", id: \"zip\", required: false }, { title: \"Work Phone\", id: \"workphone\", required: false }, { title: \"Home Phone\", id: \"homephone\", required: false }, { title: \"Mobile Phone\", id: \"mobilephone\", required: false }, { title: \"Work Fax\", id: \"workfax\", required: false }, { title: \"Home Fax\", id: \"homefax\", required: false }, { title: \"Notes\", id: \"notes\", required: false }, { title: \"Last Modified Time\", id: \"modified\", required: false }, { title: \"Show (true or false field)\", id: \"show\", required: false }]"
                                 },
@@ -121,19 +76,14 @@
                     }
                 }
             },
-            "data_pipeline":
-            {
-                "source":
-                {
+            "data_pipeline": {
+                "source": {
                     "!resource": "ActiveCampaignContact"
                 },
-                "target":
-                {
-                    "!pipe":
-                    [
+                "target": {
+                    "!pipe": [
                         {
-                            "!http":
-                            {
+                            "!http": {
                                 "target": "activecampaign",
                                 "method": "GET",
                                 "path": "api/3/contacts?email=${piped_content.0.email}&include=contactLists.list"
@@ -143,40 +93,34 @@
                             "!jq": "[.body.lists[].stringid]  | if index(\"client\") then {contactType: \"client\"} else {contactType: \"agent\"} end"
                         },
                         {
-                            "!http":
-                            {
+                            "!http": {
                                 "method": "GET",
                                 "path": "/rest/${piped_content.2.contactType}s/search?q=${piped_content.0.email}"
                             }
                         },
                         {
-                            "!switch":
-                            {
+                            "!switch": {
                                 "jq": ".body | if (.count > 1) then 0 elif (keys[0] == \"clients\" and .count > 0) then 1 elif (keys[0] == \"agents\" and .count > 0) then 2 else 3 end",
-                                "cases":
-                                [
+                                "cases": [
                                     {
                                         "!error": "Search produced more than one result, please manually update contact"
                                     },
                                     {
-                                        "!http":
-                                        {
+                                        "!http": {
                                             "method": "POST",
                                             "path": "/rest/${piped_content.2.contactType}/${piped_content.3.body.clients.0.id}",
                                             "body": "${piped_content.0}"
                                         }
                                     },
                                     {
-                                        "!http":
-                                        {
+                                        "!http": {
                                             "method": "POST",
                                             "path": "/rest/${piped_content.2.contactType}/${piped_content.3.body.agents.0.id}",
                                             "body": "${piped_content.0}"
                                         }
                                     },
                                     {
-                                        "!http":
-                                        {
+                                        "!http": {
                                             "method": "POST",
                                             "path": "/rest/${piped_content.2.contactType}/",
                                             "body": "${piped_content.0}"
