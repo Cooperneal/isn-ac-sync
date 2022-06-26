@@ -1,0 +1,205 @@
+{
+  "id": "6f29c6bf-dfe8-4866-80dd-7baa3005f4ae",
+  "path": "workflows -> 0 -> data_pipeline -> target",
+  "hint": "Failed to replace variable within `target`. Please double check your usage of `piped_content`",
+  "details": {
+    "context": {
+      "http_options": {
+        "target": "connection",
+        "method": "POST",
+        "headers": {},
+        "body": "${data::workflow::body}",
+        "params": {},
+        "path": "https://eo5ebc01iehpewq.m.pipedream.net/waypoint/rest/client/",
+        "url": null,
+        "pagination": false
+      },
+      "error": ""
+    }
+  },
+  "app_version": "1fe181fb-9f46-47bc-90f6-b782beeedadf",
+  "level": "ERROR",
+  "created_timestamp": "2022-05-11T17:40:11.789599Z"
+}
+
+{
+  "id": "0d7e98f1-e45e-4d45-96ef-8526bd70c13a",
+  "path": "workflows -> 0 -> data_pipeline -> target",
+  "hint": "Status_code: 404. Please ensure that the path for the http command is correct.",
+  "details": {
+    "context": {
+      "variables": {
+        "element": {
+          "id": "5be9abd3-dd7c-4ef3-81cb-a72f38eaeaf7"
+        },
+        "custom_data": {
+          "subPathName": {
+            "value": "boop"
+          },
+          "subDomainName": {
+            "value": "beep"
+          }
+        },
+        "connection": {
+          "id": "45b0b6fa-01ed-4ce6-9473-2ffbc1ffb1b2",
+          "ac_account_api_url": "https://2618711.account.api-us1.com",
+          "ac_account_id": 2618711
+        },
+        "subdomain": "waypoint",
+        "app": null,
+        "schema_data": null,
+        "webhook": null,
+        "polling_state": null,
+        "data": null,
+        "source_data": {
+          "input": {
+            "contact": {
+              "id": 1
+            }
+          },
+          "output": {
+            "email": "Cooper.Neal24@gmail.com",
+            "firstName": "Super coop",
+            "lastName": "Shishil",
+            "phone": "4075061019"
+          }
+        },
+        "piped_content": [
+          {
+            "email": "Cooper.Neal24@gmail.com",
+            "first": "Super coop",
+            "last": "Shishil",
+            "mobilephone": "4075061019"
+          },
+          {
+            "message": "Success",
+            "body": {
+              "status": "ok",
+              "count": 1,
+              "q": "cooper.neal24@gmail.com",
+              "clients": [
+                {
+                  "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                  "show": "yes",
+                  "modified": "2022-05-03T00:29:56Z"
+                }
+              ]
+            },
+            "headers": {
+              "Date": "Wed, 11 May 2022 17:37:11 GMT",
+              "Content-Type": "application/json; charset=utf-8",
+              "Content-Length": "160",
+              "Connection": "keep-alive",
+              "X-Powered-By": "Express",
+              "Access-Control-Allow-Origin": "*"
+            },
+            "next_token": null,
+            "status": "ok",
+            "count": 1,
+            "q": "cooper.neal24@gmail.com",
+            "clients": [
+              {
+                "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                "show": "yes",
+                "modified": "2022-05-03T00:29:56Z"
+              }
+            ]
+          },
+          {
+            "body": {
+              "message": "Success",
+              "body": {
+                "status": "ok",
+                "count": 1,
+                "q": "cooper.neal24@gmail.com",
+                "clients": [
+                  {
+                    "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                    "show": "yes",
+                    "modified": "2022-05-03T00:29:56Z"
+                  }
+                ]
+              },
+              "headers": {
+                "Date": "Wed, 11 May 2022 17:37:11 GMT",
+                "Content-Type": "application/json; charset=utf-8",
+                "Content-Length": "160",
+                "Connection": "keep-alive",
+                "X-Powered-By": "Express",
+                "Access-Control-Allow-Origin": "*"
+              },
+              "next_token": null,
+              "status": "ok",
+              "count": 1,
+              "q": "cooper.neal24@gmail.com",
+              "clients": [
+                {
+                  "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                  "show": "yes",
+                  "modified": "2022-05-03T00:29:56Z"
+                }
+              ]
+            }
+          },
+          {
+            "body": {
+              "message": "Success",
+              "body": {
+                "status": "ok",
+                "count": 1,
+                "q": "cooper.neal24@gmail.com",
+                "clients": [
+                  {
+                    "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                    "show": "yes",
+                    "modified": "2022-05-03T00:29:56Z"
+                  }
+                ]
+              },
+              "headers": {
+                "Date": "Wed, 11 May 2022 17:37:11 GMT",
+                "Content-Type": "application/json; charset=utf-8",
+                "Content-Length": "160",
+                "Connection": "keep-alive",
+                "X-Powered-By": "Express",
+                "Access-Control-Allow-Origin": "*"
+              },
+              "next_token": null,
+              "status": "ok",
+              "count": 1,
+              "q": "cooper.neal24@gmail.com",
+              "clients": [
+                {
+                  "id": "4b7e83e7-1d98-4bd9-8083-8ef362d32cb5",
+                  "show": "yes",
+                  "modified": "2022-05-03T00:29:56Z"
+                }
+              ]
+            }
+          },
+          "${data.workflow.body}"
+        ]
+      },
+      "request": {
+        "url": "https://eo5ebc01iehpewq.m.pipedream.net/waypoint/rest/client/",
+        "method": "POST",
+        "headers": {},
+        "body": {}
+      },
+      "response": {
+        "status_code": 404,
+        "headers": {
+          "date": "Wed, 11 May 2022 17:37:12 GMT",
+          "server": "envoy",
+          "content-length": "289",
+          "content-type": "application/json",
+          "x-envoy-upstream-service-time": "471"
+        },
+        "content": "Not Found"
+      }
+    }
+  },
+  "app_version": "1fe181fb-9f46-47bc-90f6-b782beeedadf",
+  "level": "ERROR",
+  "created_timestamp": "2022-05-11T17:37:12.682315Z"
+}
